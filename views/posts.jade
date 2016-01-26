@@ -1,0 +1,51 @@
+doctype html
+html(lang="jp")
+  head
+    meta(charset="UTF-8")
+    link(rel="stylesheet",
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7",
+    crossorigin="anonymous")
+    link(rel="stylesheet",
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css",
+    integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r",
+    crossorigin="anonymous")
+    title 秘密の匿名掲示板
+  body(class="container")
+    div(class="page-header")
+      a(href="/logout", class="btn btn-info pull-right") ログアウト
+      h1 秘密の匿名掲示板
+    h2 新規投稿
+    form(method="post", action="/posts")
+      div(class="form-group")
+        textarea(name="content", class="form-control", rows="4")
+      div(class="form-group")
+        button(type="submit", class="btn btn-info pull-right") 投稿
+      div(class="row")
+    h2 投稿一覧
+    each post in posts
+      div(class="panel panel-default")
+        div(class="panel-heading")
+          - var isPostedByAdmin = (post.postedBy === 'admin')
+          if isPostedByAdmin
+            span #{post.id} : 管理人 ★
+          else
+            - var originalTrackingId = post.trackingCookie ? post.trackingCookie.split('_')[0] : ''
+            span #{post.id} : ID:#{originalTrackingId}
+        div(class="panel-body")
+          p(style="white-space:pre;") #{post.content}
+        div(class="panel-footer")
+          div 投稿日時: #{post.formattedCreatedAt}
+          - var isAdmin = (user === 'admin')
+          if isAdmin
+            div 投稿者: #{post.postedBy}
+          - var isDeletable = (user === post.postedBy || isAdmin)
+          if isDeletable
+            form(method="post", action="/posts?delete=1")
+              input(type="hidden", name="id", value="#{post.id}")
+              button(type="submit", class="btn btn-danger pull-right") 削除
+              div(class="row")
+    script(src="https://code.jquery.com/jquery-2.2.0.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
+    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",
+    crossorigin="anonymous")
