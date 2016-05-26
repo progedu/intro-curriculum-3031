@@ -8,7 +8,7 @@ const html = jade.renderFile('./views/posts.jade', {
     id: 1,
     content: '<script>alert(\'test\');</script>',
     postedBy: 'guest1',
-    trackingCookie: 1,
+    trackingCookie: '1',
     createdAt: new Date(),
     updatedAt: new Date()
   }],
