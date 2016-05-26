@@ -1,9 +1,9 @@
 'use strict';
-let jade = require('jade');
-let assert = require('assert');
+const jade = require('jade');
+const assert = require('assert');
 
 // jade のテンプレートにおける XSS 脆弱性のテスト
-let html = jade.renderFile('./views/posts.jade', {
+const html = jade.renderFile('./views/posts.jade', {
   posts: [{
     id: 1,
     content: '<script>alert(\'test\');</script>',
