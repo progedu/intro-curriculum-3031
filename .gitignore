@@ -1,1 +1,4 @@
 node_modules/
+.eslintignore
+.idea/
+package-lock.json
