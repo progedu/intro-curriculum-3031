@@ -1,9 +1,9 @@
 'use strict';
-const jade = require('jade');
+const pug = require('pug');
 const assert = require('assert');
 
-// jade のテンプレートにおける XSS 脆弱性のテスト
-const html = jade.renderFile('./views/posts.jade', {
+// pug のテンプレートにおける XSS 脆弱性のテスト
+const html = pug.renderFile('./views/posts.pug', {
   posts: [{
     id: 1,
     content: '<script>alert(\'test\');</script>',
