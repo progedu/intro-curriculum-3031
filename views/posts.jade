@@ -2,14 +2,22 @@ doctype html
 html(lang="jp")
   head
     meta(charset="UTF-8")
+    //- CDNでBootstrapを読み込む
+    //- href属性 : URL
+    //- integrity属性 : CDN経由で参照したリソースの整合性を確認する仕組み。
+    //-                 値にSRI Hashの値を設定する。
+    //-                 https://www.srihash.org/ でURLからSRI Hash値が取得できる
+    //- crossorigin属性 : Anonymousの場合、クライアント側に認証情報を求めない。デフォルト値。
     link(rel="stylesheet",
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7",
-    crossorigin="anonymous")
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7",
+      crossorigin="anonymous")
+    //- Bootstrapオプションのbootstrap-theme.cssも読み込む。
+    //- デフォルトのBootstrapよりグラデーションや立体感が出る
     link(rel="stylesheet",
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css",
-    integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r",
-    crossorigin="anonymous")
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css",
+      integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r",
+      crossorigin="anonymous")
     title 秘密の匿名掲示板
   body(class="container")
     div(class="page-header")
@@ -18,34 +26,52 @@ html(lang="jp")
     h2 新規投稿
     form(method="post", action="/posts")
       div(class="form-group")
-        textarea(name="content", class="form-control", rows="4")
+        textarea(name="content", class="form-control", rows=4)
       div(class="form-group")
         button(type="submit", class="btn btn-info pull-right") 投稿
+      //- 間隔の調整。邪道。
       div(class="row")
     h2 投稿一覧
+    //- postsとして投げられた変数を１件ずつ処理
     each post in posts
       div(class="panel panel-default")
         div(class="panel-heading")
+          //- postを投稿したユーザーが管理人かどうか
           - var isPostedByAdmin = (post.postedBy === 'admin')
+          //- 管理人なら
           if isPostedByAdmin
+            //- 変数埋め込み
+            //- 管理人であることを表示する
             span #{post.id} : 管理人 ★
           else
+            //- トラッキングIDを取得する
             - var originalTrackingId = post.trackingCookie ? post.trackingCookie.split('_')[0] : ''
+            //- 管理人でないならクッキー値をIDとして表示する
             span #{post.id} : ID:#{originalTrackingId}
         div(class="panel-body")
+          //- HTMLタグを認識させる
+          //- p!= post.content
+          //- CSSスタイルを適用して改行を反映させる
           p(style="white-space:pre;") #{post.content}
         div(class="panel-footer")
           div 投稿日時: #{post.formattedCreatedAt}
+          //- 閲覧中のユーザーが管理人かどうか
           - var isAdmin = (user === 'admin')
+          //- 管理人なら
           if isAdmin
+            //- 投稿者を表示する
             div 投稿者: #{post.postedBy}
+          //- JavaScriptもかける
           - var isDeletable = (user === post.postedBy || isAdmin)
           if isDeletable
             form(method="post", action="/posts?delete=1")
               input(type="hidden", name="id", value="#{post.id}")
               button(type="submit", class="btn btn-danger pull-right") 削除
               div(class="row")
-    script(src="https://code.jquery.com/jquery-2.2.0.min.js")
-    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
-    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",
-    crossorigin="anonymous")
+
+      //- jQueryの読み込み
+      script(src="https://code.jquery.com/jquery-2.2.0.min.js")
+      //- Bootstrapで使用するjsファイルの読み込み
+      script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js",
+      integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS",
+      crossorigin="anonymous")
