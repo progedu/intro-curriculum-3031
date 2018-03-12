@@ -37,7 +37,7 @@ html(lang="jp")
             - var isDeletable = (user === post.postedBy || isAdmin)
             if isDeletable
               form(method="post", action="/posts?delete=1")
-                input(type="hidden", name="id", value="#{post.id}")
+                input(type="hidden", name="id", value=post.id)
                 button(type="submit").btn.btn-danger.float-right 削除
     script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
