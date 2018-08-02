@@ -12,9 +12,9 @@ html(lang="jp")
       a(href="/logout").btn.btn-info.float-right ログアウト
       h1 秘密の匿名掲示板
     h2 新規投稿
-    form(method="post", action="/posts")
+    form(method="post" action="/posts")
       div.form-group
-        textarea(name="content",  rows="4").form-control
+        textarea(name="content" rows="4").form-control
       div.form-group
         button(type="submit").btn.btn-primary 投稿
     h2 投稿一覧
@@ -36,8 +36,8 @@ html(lang="jp")
               div 投稿者: #{post.postedBy}
             - var isDeletable = (user === post.postedBy || isAdmin)
             if isDeletable
-              form(method="post", action="/posts?delete=1")
-                input(type="hidden", name="id", value=post.id)
+              form(method="post" action="/posts?delete=1")
+                input(type="hidden" name="id" value=post.id)
                 button(type="submit").btn.btn-danger.float-right 削除
     script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
