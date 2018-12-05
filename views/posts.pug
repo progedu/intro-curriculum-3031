@@ -23,7 +23,7 @@ html(lang="jp")
         div.card-header
             - var isPostedByAdmin = (post.postedBy === 'admin')
             if isPostedByAdmin
-             span #{post.id} : 管理人 ★
+              span #{post.id} : 管理人 ★
             else
               - var originalTrackingId = post.trackingCookie ? post.trackingCookie.split('_')[0] : ''
               span #{post.id} : ID:#{originalTrackingId}  
