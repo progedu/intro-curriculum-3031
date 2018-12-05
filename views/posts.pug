@@ -7,33 +7,35 @@ html(lang="jp")
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm",
     crossorigin="anonymous")
     title 秘密の匿名掲示板
-  body.container
+  body(style="background-color: #333; color: #fff; padding-top:4.5rem").container
     div.my-3
-      a(href="/logout").btn.btn-info.float-right ログアウト
-      h1 秘密の匿名掲示板
+      nav.bg-dark.navbar.navbar-expand-lg.navbar-light.fixed-top
+        h1 秘密の匿名掲示板
+        a(href="/logout").btn.btn-warning.btn-lg.ml-auto ログアウト
     h2 新規投稿
     form(method="post" action="/posts")
       div.form-group
-        textarea(name="content" rows="4").form-control
+        textarea(name="content" rows="4" placeholder="※半角+は表示されないので、使用する際は全角＋記号を用いてください").form-control
       div.form-group
-        button(type="submit").btn.btn-primary 投稿
+        button(type="submit").btn.btn-success.btn-lg 投稿
     h2 投稿一覧
     each post in posts
-      div.card.my-3
-        div.card-header
+      div.card.my-3.border-dark
+        div.card-header.bg-light.text-dark
             - var isPostedByAdmin = (post.postedBy === 'admin')
             if isPostedByAdmin
              span #{post.id} : 管理人 ★
             else
               - var originalTrackingId = post.trackingCookie ? post.trackingCookie.split('_')[0] : ''
-              span #{post.id} : ID:#{originalTrackingId}  
-        div.card-body
-          p(style="white-space:pre; overflow:auto;") #{post.content}
-        div.card-footer
+              span #{post.id} : ID:#{originalTrackingId}      
+        div.card-body.bg-white.text-dark
+          p(style="white-space:pre; overflow:auto;").font-weight-bold #{post.content}
+        div.card-footer.bg-light.text-dark
             div 投稿日時: #{post.formattedCreatedAt}
             - var isAdmin = (user === 'admin')
             if isAdmin
-              div 投稿者: #{post.postedBy}
+              div.float-left 投稿者： 
+              span.text-danger #{post.postedBy}
             - var isDeletable = (user === post.postedBy || isAdmin)
             if isDeletable
               form(method="post" action="/posts?delete=1")
