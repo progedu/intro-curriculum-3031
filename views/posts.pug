@@ -7,10 +7,14 @@ html(lang="jp")
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm",
     crossorigin="anonymous")
     title 秘密の匿名掲示板
-  body(style="background-color: #333; color: #fff; padding-top:4.5rem").container
+  body(style="background-color: #333; color: #fff; padding-top:5.5rem").container
     div.my-3
       nav.bg-dark.navbar.navbar-expand-lg.navbar-light.fixed-top
         h1 秘密の匿名掲示板
+        form(method="post" action="/posts?decipher=1")
+          div.form-group
+            textarea(name="password" rows="1" placeholder="復号パスワード").mt-4.ml-5.form-control-sm
+            button(type="submit").btn.btn-primary 復号
         a(href="/logout").btn.btn-warning.btn-lg.ml-auto ログアウト
     h2 新規投稿
     form(method="post" action="/posts")
