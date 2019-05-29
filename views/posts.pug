@@ -28,7 +28,7 @@ html(lang="jp")
               - var originalTrackingId = post.trackingCookie ? post.trackingCookie.split('_')[0] : ''
               span #{post.id} : ID:#{originalTrackingId}  
         div.card-body
-          p(style="white-space:pre; overflow:auto;") #{post.content}
+          p.card-text(style="white-space:pre; overflow:auto;") #{post.content}
         div.card-footer
             div 投稿日時: #{post.formattedCreatedAt}
             - var isAdmin = (user === 'admin')
