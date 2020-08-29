@@ -1,9 +1,9 @@
 'use strict';
-const jade = require('jade');
+const pug = require('pug');
 const assert = require('assert');
 
-// jade のテンプレートにおける XSS 脆弱性のテスト
-const html = jade.renderFile('./views/posts.jade', {
+// pug のテンプレートにおける XSS 脆弱性のテスト
+const html = pug.renderFile('./views/posts.pug', {
   posts: [{
     id: 1,
     content: '<script>alert(\'test\');</script>',
@@ -16,6 +16,6 @@ const html = jade.renderFile('./views/posts.jade', {
 });
 
 // スクリプトタグがエスケープされて含まれていることをチェック
-assert(html.indexOf('&lt;script&gt;alert(\'test\');&lt;/script&gt;') > 0);
+assert(html.includes('&lt;script&gt;alert(\'test\');&lt;/script&gt;'));
 console.log('テストが正常に完了しました');
 
