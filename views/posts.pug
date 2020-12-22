@@ -12,6 +12,7 @@ html(lang="jp")
       a(href="/logout").btn.btn-info.float-right ログアウト
       h1 秘密の匿名掲示板
     h2 新規投稿
+    p #{user}でログイン中です
     form(method="post" action="/posts")
       div.form-group
         textarea(name="content" rows="4").form-control
