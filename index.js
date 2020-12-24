@@ -1,4 +1,6 @@
 'use strict';
+require('dotenv').config();
+
 const http = require('http');
 const auth = require('http-auth');
 const router = require('./lib/router');
