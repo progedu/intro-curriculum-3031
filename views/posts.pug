@@ -11,6 +11,8 @@ html(lang="jp")
     div.my-3
       a(href="/logout").btn.btn-info.float-right ログアウト
       h1 秘密の匿名掲示板
+      //- ログインユーザーを表示
+      p #{user}
     h2 新規投稿
     form(method="post" action="/posts")
       div.form-group
